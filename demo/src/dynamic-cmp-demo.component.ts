@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'dynamic-cmp-demo',
   template: `
     <h2>dynamic-cmp-demo</h2>
-    <div *dynamicComponent="content; context: {text: text};"></div>
+    <div *dynamicComponent="content; context: {text: text, showText: showText};"></div>
     <awesome-button msg="static">Static HTML</awesome-button>
     <hr/>
     text: <input type="text" [(ngModel)]="text" /><br/>
@@ -15,6 +15,7 @@ export class DynamicCmpDemoComponent {
   content: string;
 
   text = 'foo';
+  showText = false;
 
   ngOnInit() {
     fetchAwesomeDocument().then(content => {
@@ -25,9 +26,9 @@ export class DynamicCmpDemoComponent {
 
 export function fetchAwesomeDocument() {
   return Promise.resolve(`<article>
-    <h1>Awesome Document</h1>
+    <h1>Awesome Document with ngIf</h1>
     <div>
-      <p>{{text}}</p>
+      <p *ngIf="showText">{{text}}</p>
       <awesome-button msg="dynamic-cmp">Dynamic HTML</awesome-button>
     </div>
   </article>`);
