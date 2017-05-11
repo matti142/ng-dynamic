@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'dynamic-cmp-demo',
   template: `
     <h2>dynamic-cmp-demo</h2>
-    <div *dynamicComponent="content; context: {text: text};"></div>
+    <div *dynamicComponent="content; context: self;"></div>
     <awesome-button msg="static">Static HTML</awesome-button>
     <hr/>
     text: <input type="text" [(ngModel)]="text" /><br/>
@@ -13,22 +13,27 @@ import { Component } from '@angular/core';
 })
 export class DynamicCmpDemoComponent {
   content: string;
-
   text = 'foo';
+  self = this;
+  showText = true;
 
   ngOnInit() {
-    fetchAwesomeDocument().then(content => {
+    this.fetchAwesomeDocument().then(content => {
       this.content = content;
     });
   }
-}
 
-export function fetchAwesomeDocument() {
-  return Promise.resolve(`<article>
-    <h1>Awesome Document</h1>
-    <div>
-      <p>{{text}}</p>
-      <awesome-button msg="dynamic-cmp">Dynamic HTML</awesome-button>
-    </div>
-  </article>`);
+  onDynamicButtonClicked(msg: string): void {
+    console.log('onDynamicButtonClicked:', msg);
+  }
+
+  fetchAwesomeDocument() {
+    return Promise.resolve(`<article>
+      <h1>Awesome Document</h1>
+      <div>
+        <p>{{text}}</p>
+        <awesome-button (buttonClicked)="onDynamicButtonClicked($event)" msg="dynamic-cmp">Dynamic HTML</awesome-button>
+      </div>
+    </article>`);
+  }
 }

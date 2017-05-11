@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { OnMount } from '../../index';
 
 @Component({
@@ -7,6 +7,7 @@ import { OnMount } from '../../index';
 })
 export class AwesomeButtonComponent implements OnMount, OnInit {
   @Input() msg: string;
+  @Output() buttonClicked = new EventEmitter();
   @ViewChild('innerContent') innerContent: ElementRef;
 
   dynamicOnMount(attr: Map<string, string>, innerHTML: string, el: any) {
@@ -21,5 +22,6 @@ export class AwesomeButtonComponent implements OnMount, OnInit {
 
   onClick() {
     console.log(`clicked: ${this.msg}`);
+    this.buttonClicked.emit('awesome-button clicked!');
   }
 }
