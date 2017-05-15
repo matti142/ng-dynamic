@@ -4,13 +4,12 @@ import { Component } from '@angular/core';
   selector: 'dynamic-cmp-demo',
   template: `
     <h2>dynamic-cmp-demo</h2>
-    <div *dynamicComponent="content; context: self;"></div>
+    <div *dynamicComponent="content; context: this;"></div>
   `,
 })
 export class DynamicCmpDemoComponent {
   content: string;
   text = 'foo';
-  self = this;
   showText = true;
 
   ngOnInit() {
@@ -20,7 +19,7 @@ export class DynamicCmpDemoComponent {
   }
 
   onDynamicButtonClicked(msg: string): void {
-    console.log('onDynamicButtonClicked:', msg);
+    console.log('onDynamicButtonClicked:', msg, this);
   }
 
   fetchAwesomeDocument() {
