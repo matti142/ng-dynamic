@@ -12,7 +12,7 @@
     "demo:build": "ngc -p tsconfig.demo.json && webpack demo/src/main.js demo/dist/main.js",
     "demo": "npm run demo:build && static demo",
     "lint": "tslint -e **/*.ngfactory.ts --project tsconfig.json",
-    "postinstall": "npm run build"
+    "postinstall": "ngc -p ."
   },
   "repository": {
     "type": "git",
